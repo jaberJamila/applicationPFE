@@ -2,16 +2,14 @@
 
 namespace App\Form;
 
-use App\Entity\Users;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -20,71 +18,45 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email' , EmailType::class, [
-                'attr' => [
-                    'class' =>'form-control'
+            ->add('email', EmailType::class, [
+                'label' => 'Adresse de messagerie'
+            ])
+            ->add('firstName', TextType::class, [
+                'label' => 'Prénom'
+            ])
+            ->add('lastname', TextType::class, [
+                'label' => 'Nom'
+            ])
+            ->add('company', TextType::class, [
+                'label' => 'Entreprise'
+            ])
+            ->add('quality', ChoiceType::class, [
+                'choices' => [
+                    'Chercheur' => 'Chercheur',
+                    'Doctorant' => 'Doctorant',
+                    'Master' => 'Master',
+                    'PFE' => 'PFE',
                 ],
-                'label' => "E-mail"
+                'label' => 'Qualité'
+                //    'placeholder'=>
+
             ])
-            ->add('nom' , TextType::class, [
-                'attr' => [
-                    'class' =>'form-control'
-                ]
+            ->add('iraId', TextType::class, [
+                'label' => 'Identifiant de formation IRA'
             ])
-            ->add('prenom', TextType::class, [
-                'attr' => [
-                    'class' =>'form-control'
-                ]
+            ->add('job', TextType::class, [
+                'label' => 'Fonction / Poste'
             ])
-            ->add('entreprise', TextType::class, [
-                'attr' => [
-                    'class' =>'form-control'
-                ]
+            ->add('phone', TextType::class, [
+                'label' => 'Téléphone'
             ])
-            ->add('qualite',  ChoiceType::class, [
-                'choices'  => [
-                    'Chercheur' => true,
-                    'Doctorant' => true,
-                    'Master' => true,
-                    'PFE' => true,
-                ],
-               
-            ])
-            ->add('identifierIRA', TextType::class, [
-                'attr' => [
-                    'class' =>'form-control'
-                ],
-                'label' => "Identifiant formation IRA"
-            ])
-            ->add('poste', TextType::class, [
-                'attr' => [
-                    'class' =>'form-control'
-                ]
-            ])
-            ->add('ntelephone', TextType::class, [
-                'attr' => [
-                    'class' =>'form-control'
-                ],
-                'label' => "N° télephone"
-            ])
-           
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-                'label' => "En m\'inscrivant à ce site j\'accepte..."
-            ])
-            
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password',
-                'class' =>'form-control'
-            ],
+                    'class' => 'form-control'
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -97,14 +69,13 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 'label' => "Mot de passe"
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Users::class,
+            'data_class' => User::class,
         ]);
     }
 }
