@@ -48,6 +48,7 @@ class RegistrationFormType extends AbstractType
                     'Master' => true,
                     'PFE' => true,
                 ],
+               
             ])
             ->add('identifierIRA', TextType::class, [
                 'attr' => [

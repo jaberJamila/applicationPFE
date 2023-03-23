@@ -57,6 +57,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 100)]
     private $resetToken;
 
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -242,4 +244,5 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+  
 }
